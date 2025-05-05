@@ -1,2 +1,4 @@
 EHRSHOT_ASSETS/
 ehrshot-omop/
+.venv/
+results/
