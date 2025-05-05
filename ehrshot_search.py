@@ -41,7 +41,7 @@ ckd_snomed_concepts = concepts[concepts["concept_id"].isin(mapped["concept_id_2"
 
 #Use those SNOMED IDs to filter condition_occurrence
 ckd_concept_ids = ckd_snomed_concepts["concept_id"].tolist()
-ckd_conditions = condition[condition["condition_concept_id"].isin(ckd_concept_ids)]
+ckd_conditions = condition[condition["condition_concept_id"].isin(ckd_concept_ids)].copy()
 
 ckd_patient_ids = ckd_conditions["person_id"].unique()
 print(f"Found {len(ckd_patient_ids)} unique patients with CKD.")    #1269
@@ -89,10 +89,11 @@ stage_dates = stage_dates.sort_values(["person_id", "stage_order"])
 # Pivot the table
 pivoted = stage_dates.pivot(index='person_id', columns='ckd_stage', values='condition_start_DATE')
 
-# Optional: sort columns by clinical order
+# Sort columns by clinical order
 stage_order = ["Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "ESRD"]
 pivoted = pivoted.reindex(columns=stage_order)
 
 # Reset index to turn person_id into a column again
 pivoted = pivoted.reset_index()
+pivoted.to_csv("results/ckd_stage_diagnoses.csv")
 #this variable is ckd_stage_diagnoses

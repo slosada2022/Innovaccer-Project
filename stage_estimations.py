@@ -16,9 +16,9 @@ filtered_times = stage_times[transition_columns].where(stage_times[transition_co
 
 summary = pd.DataFrame({
     "Raw Mean": stage_times.mean(),
-    "Raw Median": stage_times.mean(),
+    "Raw Median": stage_times.median(),
     "Filtered Mean": filtered_times.mean(),
-    "Filtered Median": filtered_times.mean(),
+    "Filtered Median": filtered_times.median(),
 }).T.round(2)
 
 summary.to_csv("results/summary.csv")
